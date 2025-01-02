@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
 
-export const useConfettiAnimation = () => {
+const useConfettiAnimation = () => {
+  const [windowDimensions, setWindowDimensions] = useState({ width: 0, height: 0 });
   const [isAnimating, setIsAnimating] = useState(false);
-  const [windowDimensions, setWindowDimensions] = useState({
-    width: 0,
-    height: 0,
-  });
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -16,7 +13,7 @@ export const useConfettiAnimation = () => {
         });
       };
 
-      handleResize();
+      handleResize(); // Set initial dimensions
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
     }
@@ -24,13 +21,10 @@ export const useConfettiAnimation = () => {
 
   const startAnimation = () => {
     setIsAnimating(true);
-    setTimeout(() => setIsAnimating(false), 3000);
+    setTimeout(() => setIsAnimating(false), 5000); // Stop animation after 5 seconds
   };
 
-  return {
-    isAnimating,
-    startAnimation,
-    width: windowDimensions.width,
-    height: windowDimensions.height,
-  };
+  return { ...windowDimensions, isAnimating, startAnimation };
 };
+
+export default useConfettiAnimation;

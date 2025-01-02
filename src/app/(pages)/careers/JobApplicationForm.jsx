@@ -16,8 +16,10 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
-import ReactConfetti from "react-confetti";
-import { useConfettiAnimation } from "@/hooks/useConfettiAnimation";
+import useConfettiAnimation from "@/hooks/useConfettiAnimation";
+import dynamic from "next/dynamic";
+// Dynamically import ReactConfetti to ensure it only runs on the client
+const ReactConfetti = dynamic(() => import("react-confetti"), { ssr: false });
 
 const VALID_FILE_TYPES = {
   "application/pdf": true,
@@ -36,8 +38,6 @@ const technicalTeamDepartments = [
   { value: "seo", label: "SEO" },
   { value: "others", label: "Others" },
 ];
-
-
 
 const FormInput = ({
   id,
